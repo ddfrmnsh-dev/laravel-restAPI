@@ -10,7 +10,7 @@ class TodoController extends Controller
     //
     public function __construct()
     {
-        $this->middleware('auth:api');
+        // $this->middleware('auth:api');
     }
 
     public function index()
@@ -26,12 +26,14 @@ class TodoController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255'
+            'description' => 'required|string|max:255',
+            'category' => 'required|string|max:255'
         ]);
 
         $todo = Todo::create([
             'title' => $request->title,
-            'description' => $request->description
+            'description' => $request->description,
+            'category' => $request->category
         ]);
 
         return response()->json([
@@ -54,12 +56,14 @@ class TodoController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255'
+            'description' => 'required|string|max:255',
+            'category' => 'required|string|max:255'
         ]);
 
         $todo = Todo::find($id);
         $todo->title = $request->title;
         $todo->description = $request->description;
+        $todo->category = $request->category;
         $todo->save();
 
         return response()->json([
